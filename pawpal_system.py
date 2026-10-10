@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import date
+from dataclasses import dataclass, field, replace
+from datetime import date, timedelta
 from typing import List, Optional
 
 
@@ -20,7 +20,15 @@ class Task:
 
     def mark_complete(self) -> Optional[Task]:
         """Mark done; return the next occurrence if the task repeats."""
-        pass
+        
+        self.completed = True
+        if self.frequency == "daily":
+            step = timedelta(days=1)
+        elif self.frequency == "weekly":
+            step = timedelta(weeks=1)
+        else:
+            return None
+        return replace(self, due_date=self.due_date + step, completed=False)
 
 
 @dataclass
