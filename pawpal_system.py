@@ -20,7 +20,7 @@ class Task:
 
     def mark_complete(self) -> Optional[Task]:
         """Mark done; return the next occurrence if the task repeats."""
-        
+
         self.completed = True
         if self.frequency == "daily":
             step = timedelta(days=1)
@@ -42,15 +42,16 @@ class Pet:
 
     def add_task(self, task: Task) -> None:
         """Attach a task to this pet."""
-        pass
+        task.pet_name = self.name
+        self.tasks.append(task)
 
     def remove_task(self, task: Task) -> None:
         """Remove a task from this pet."""
-        pass
+        self.tasks.remove(task)
 
     def get_tasks(self) -> List[Task]:
         """Return this pet's tasks."""
-        pass
+        return list(self.tasks)
 
 
 class Owner:
@@ -62,16 +63,21 @@ class Owner:
 
     def add_pet(self, pet: Pet) -> None:
         """Add a pet to this owner."""
-        pass
+        self.pets.append(pet)
 
     def get_pet(self, name: str) -> Optional[Pet]:
         """Find a pet by name, or return None."""
-        pass
+        for pet in self.pets:
+            if pet.name == name:
+                return pet
+        return None
 
     def get_all_tasks(self) -> List[Task]:
         """Return every task from every pet."""
-        pass
-
+        all_tasks = []
+        for pet in self.pets:
+            all_tasks.extend(pet.tasks)
+        return all_tasks
 
 class Scheduler:
     """The 'brain': organizes and manages tasks across all pets."""
