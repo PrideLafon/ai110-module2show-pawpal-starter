@@ -56,6 +56,10 @@ class Owner:
         """Add a pet to this owner."""
         pass
 
+    def get_pet(self, name: str) -> Optional[Pet]:
+        """Find a pet by name, or return None."""
+        pass
+
     def get_all_tasks(self) -> List[Task]:
         """Return every task from every pet."""
         pass
@@ -71,15 +75,17 @@ class Scheduler:
         """Fetch all tasks via the Owner."""
         pass
 
-    def sort_by_time(self) -> List[Task]:
+    def sort_by_time(self, tasks: Optional[List[Task]] = None) -> List[Task]:
         """Return tasks in chronological order."""
         pass
 
-    def filter_tasks(self) -> List[Task]:
-        """Return tasks filtered by pet or completion status."""
+    def filter_tasks(
+        self, pet_name: Optional[str] = None, completed: Optional[bool] = None
+    ) -> List[Task]:
+        """Return tasks filtered by pet name and/or completion status."""
         pass
 
-    def detect_conflicts(self) -> List[str]:
+    def detect_conflicts(self, tasks: Optional[List[Task]] = None) -> List[str]:
         """Return warnings for tasks scheduled at the same time."""
         pass
 

@@ -10,10 +10,19 @@
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
+    I designed four classes. `Task` represents one chore (description, time, date, frequency, completion status) and can mark itself complete. `Pet` stores a pet's details and its list of tasks. `Owner` stores the owner's name and list of pets, and can return every task from every pet in one list. `Scheduler` is the "brain": it holds an owner and organizes tasks across all of their pets (sorting, filtering, conflict warnings, and recurring tasks). The relationships are: an Owner has many Pets, a Pet has many Tasks, and the Scheduler reads from the Owner rather than from a single pet.
+
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+
+    Yes, my design changed after I asked an AI assistant to review my skeleton. I accepted three suggestions:
+
+1. `Pet.add_task()` now stamps the pet's name onto the task, because the Scheduler sees all tasks mixed together and needs to know whose each one is.
+2. I added `Owner.get_pet(name)` so the Scheduler can find the right pet when it has to add the next occurrence of a recurring task.
+3. I gave `filter_tasks()` parameters (pet name and completion status) and let `sort_by_time()` and `detect_conflicts()` accept a list of tasks, so they can be reused on filtered results.
+
 
 ---
 
