@@ -3,6 +3,9 @@
 ## 1. System Design
 
 **a. Initial design**
+- A user can add a pet so that the app knows who needs care.
+- A user can edit or reschedule a task so the day's plan adapts when something unexpected comes up.
+- A user can view today's tasks in time order, with warnings for clashes, so they know what to do next and when.
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
