@@ -108,12 +108,35 @@ class Scheduler:
 
     def detect_conflicts(self, tasks: Optional[List[Task]] = None) -> List[str]:
         """Return warnings for tasks scheduled at the same time."""
-        pass
+        if tasks is None:
+            tasks = self.get_all_tasks()
+        slots = {}
+        for task in tasks:
+            if not task.completed:
+                key = (task.due_date, task.time)
+                slots.setdefault(key, []).append(task)
+        warnings = []
+        for (day, time), group in sorted(slots.items()):
+            if len(group) > 1:
+                names = ", ".join(
+                    f"{t.pet_name}: {t.description}" for t in group
+                )
+                warnings.append(f"Conflict on {day} at {time} -> {names}")
+        return warnings
 
     def complete_task(self, task: Task) -> None:
         """Complete a task and schedule the next one if it repeats."""
-        pass
+        following = task.mark_complete()
+        if following is not None:
+            pet = self.owner.get_pet(task.pet_name)
+            if pet is not None:
+                pet.add_task(following)
 
     def get_todays_schedule(self) -> List[Task]:
         """Return today's tasks in time order."""
-        pass
+        today = date.today()
+        due_today = [
+            t for t in self.get_all_tasks()
+            if t.due_date == today and not t.completed
+        ]
+        return self.sort_by_time(due_today)
