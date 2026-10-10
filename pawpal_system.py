@@ -87,17 +87,24 @@ class Scheduler:
 
     def get_all_tasks(self) -> List[Task]:
         """Fetch all tasks via the Owner."""
-        pass
+        return self.owner.get_all_tasks()
 
     def sort_by_time(self, tasks: Optional[List[Task]] = None) -> List[Task]:
         """Return tasks in chronological order."""
-        pass
+        if tasks is None:
+            tasks = self.get_all_tasks()
+        return sorted(tasks, key=lambda t: (t.due_date, t.time))
 
     def filter_tasks(
         self, pet_name: Optional[str] = None, completed: Optional[bool] = None
     ) -> List[Task]:
         """Return tasks filtered by pet name and/or completion status."""
-        pass
+        result = self.get_all_tasks()
+        if pet_name is not None:
+            result = [t for t in result if t.pet_name == pet_name]
+        if completed is not None:
+            result = [t for t in result if t.completed == completed]
+        return result
 
     def detect_conflicts(self, tasks: Optional[List[Task]] = None) -> List[str]:
         """Return warnings for tasks scheduled at the same time."""
