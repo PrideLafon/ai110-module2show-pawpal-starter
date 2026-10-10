@@ -92,3 +92,35 @@ Describe your app in numbered steps so a reader can follow along without watchin
 5. <!-- Add more steps as needed -->
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+
+## Sample Output
+'''
+
+Today's Schedule
+----------------------------------------------------------
+[ ] 2026-10-10 07:30  Buddy   Breakfast (daily)
+[ ] 2026-10-10 07:30  Luna    Medication (once)
+[ ] 2026-10-10 14:00  Luna    Vet appointment (once)
+[ ] 2026-10-10 18:00  Buddy   Evening walk (daily)
+
+Warnings
+----------------------------------------------------------
+! Conflict on 2026-10-10 at 07:30 -> Buddy: Breakfast, Luna: Medication
+
+Buddy's tasks after completing Breakfast
+----------------------------------------------------------
+[x] 2026-10-10 07:30  Buddy   Breakfast (daily)
+[ ] 2026-10-10 18:00  Buddy   Evening walk (daily)
+[ ] 2026-10-11 07:30  Buddy   Breakfast (daily)
+
+Pending tasks only
+----------------------------------------------------------
+[ ] 2026-10-10 07:30  Luna    Medication (once)
+[ ] 2026-10-10 14:00  Luna    Vet appointment (once)
+[ ] 2026-10-10 18:00  Buddy   Evening walk (daily)
+[ ] 2026-10-11 07:30  Buddy   Breakfast (daily)
+'''
+
+## Implementation Summary
+
+PawPal+ is built from four classes in `pawpal_system.py`. `Task` represents one chore and can mark itself complete (creating the next occurrence if it repeats). `Pet` stores a pet's details and tasks. `Owner` holds a list of pets and can return every task across all of them. `Scheduler` takes an owner and handles sorting, filtering, conflict detection, and recurring tasks across all pets. `main.py` is a command-line demo that exercises all of this.
