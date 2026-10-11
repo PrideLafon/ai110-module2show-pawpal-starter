@@ -90,3 +90,14 @@ def test_pet_with_no_tasks():
 
     assert scheduler.sort_by_time() == []
     assert scheduler.detect_conflicts() == []
+
+def test_sort_by_priority_then_time():
+    """High priority comes first, and ties are broken by time."""
+    scheduler, dog, cat = make_scheduler()
+    dog.add_task(Task("Low early", "06:00", priority="low"))
+    cat.add_task(Task("High late", "20:00", priority="high"))
+    dog.add_task(Task("High early", "07:00", priority="high"))
+
+    names = [t.description for t in scheduler.sort_by_priority()]
+
+    assert names == ["High early", "High late", "Low early"]

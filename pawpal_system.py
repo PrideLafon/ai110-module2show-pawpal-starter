@@ -7,7 +7,7 @@ from dataclasses import dataclass, field, replace
 from datetime import date, timedelta
 from typing import List, Optional
 
-
+PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 @dataclass
 class Task:
     """A single pet-care activity (feeding, walk, medication...)."""
@@ -18,6 +18,7 @@ class Task:
     frequency: str = "once"  # "once", "daily", or "weekly"
     completed: bool = False
     pet_name: str = ""
+    priority: str = "medium"  # "high", "medium", or "low"
 
     def mark_complete(self) -> Optional[Task]:
         """Mark done; return the next occurrence if the task repeats."""
@@ -95,6 +96,19 @@ class Scheduler:
         if tasks is None:
             tasks = self.get_all_tasks()
         return sorted(tasks, key=lambda t: (t.due_date, t.time))
+
+    def sort_by_priority(
+        self, tasks: Optional[List[Task]] = None
+    ) -> List[Task]:
+        """Sort by priority (high first), then by date and time."""
+        if tasks is None:
+            tasks = self.get_all_tasks()
+        return sorted(
+            tasks,
+            key=lambda t: (
+                PRIORITY_ORDER.get(t.priority, 1), t.due_date, t.time
+            ),
+        )
 
     def filter_tasks(
         self, pet_name: Optional[str] = None, completed: Optional[bool] = None
