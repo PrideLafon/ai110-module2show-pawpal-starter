@@ -98,8 +98,6 @@ Files modified: `pawpal_system.py` (new field, lookup table, method), `main.py` 
 Sample output from `python main.py`:
 
 ```
-[ ] 2026-10-12 07:30  Buddy   Breakfast (daily)
-
 Priority schedule (high first, then by time)
 ----------------------------------------------------------
 [HIGH  ] 20:00  Luna    Flea treatment
