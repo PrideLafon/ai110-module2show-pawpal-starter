@@ -161,3 +161,59 @@ tests\test_pawpal.py .......                                             [100%]
 ### Confidence level
 
 ★★★★☆ (4/5). All 7 tests pass and they cover the core behavior. Conflict detection only checks for exact matching times, so overlapping durations are not tested.
+
+## Features
+
+- **Multi-pet management:** one owner can have many pets, each with its own tasks.
+- **Sorting by time:** all tasks across all pets appear in chronological order.
+- **Filtering:** view tasks by pet name or by completion status.
+- **Conflict warnings:** tasks scheduled at the same date and time are flagged.
+- **Recurring tasks:** completing a daily or weekly task creates the next one.
+- **Streamlit UI:** add pets and tasks, see the sorted schedule, and mark tasks done.
+
+## System Overview
+
+PawPal+ is built from four classes in `pawpal_system.py`:
+
+- `Task` represents one chore and can mark itself complete.
+- `Pet` stores a pet's details and its list of tasks.
+- `Owner` holds a list of pets and can return every task across all of them.
+- `Scheduler` takes an owner and handles sorting, filtering, conflict detection, and recurring tasks across all pets.
+
+The UML diagram is in `diagrams/uml_final.mmd`.
+
+## Smarter Scheduling
+
+| Feature | Method | Behavior |
+|---|---|---|
+| Sorting | `Scheduler.sort_by_time()` | Orders tasks by due date, then by `HH:MM` time |
+| Filtering | `Scheduler.filter_tasks()` | Filters by pet name and/or completion status |
+| Conflict detection | `Scheduler.detect_conflicts()` | Returns a warning for each date/time with more than one unfinished task |
+| Recurring tasks | `Task.mark_complete()` and `Scheduler.complete_task()` | A daily task creates a copy for tomorrow, a weekly task for 7 days later |
+
+## Demo Walkthrough
+
+**Main UI features:** add a pet, schedule a task for a pet (time, date, repeat), view the sorted schedule with conflict warnings, and mark a task complete.
+
+**Example workflow:**
+1. Add two pets, Buddy and Luna.
+2. Schedule a daily 08:00 task for Buddy and a task for Luna at 08:00.
+3. A warning appears because both tasks share the same time.
+4. Mark Buddy's task complete and a new one appears for tomorrow.
+
+**Key Scheduler behaviors shown:** sorting across pets, conflict warnings, and daily recurrence. The Sample Output section above shows the command-line version.
+
+## How to Run
+
+```
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python main.py
+python -m streamlit run app.py
+python -m pytest
+```
+
+- `python main.py` runs the command-line demo.
+- `python -m streamlit run app.py` starts the web app.
+- `python -m pytest` runs the tests.
