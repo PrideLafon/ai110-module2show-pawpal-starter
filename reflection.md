@@ -58,9 +58,9 @@ I used Claude in a chat window, not an in-editor assistant, to guide me through 
 - Describe one moment where you did not accept an AI suggestion as-is.
 - How did you evaluate or verify what the AI suggested?
 
-I verified AI-generated code by running each piece in the terminal and comparing the output to what I expected before moving on, then locking the behavior in with 7 pytest tests. I also broke a method on purpose to confirm a test would fail. When my demo test failed with "Owner() takes no arguments," I traced it to a method I had accidentally overwritten and fixed it myself.
+I verified AI-generated code by running each piece in the terminal and comparing the output to what I expected before moving on, then locking the behavior in with 7 pytest tests. When my demo check failed with "Owner() takes no arguments," Claude pointed out that my `__init__` had been overwritten when I pasted new methods. I restored it and re-ran the check until it printed the expected output.
 
-The AI suggested replacing my third core action ("delete a pet") with a "view today's tasks" action, because none of my actions needed the Scheduler class. I kept "delete a pet" as a possible future feature.
+I did not accept every suggestion as-is. Claude suggested replacing my third core action ("delete a pet") with "view today's tasks" because none of my actions needed the Scheduler class. I accepted that change, but I kept "delete a pet" as a future feature. I also looked at a simpler version of `detect_conflicts` using `defaultdict`.
 
 ---
 
