@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import defaultdict
 from dataclasses import dataclass, field, replace
 from datetime import date, timedelta
 from typing import List, Optional
@@ -110,11 +111,10 @@ class Scheduler:
         """Return warnings for tasks scheduled at the same time."""
         if tasks is None:
             tasks = self.get_all_tasks()
-        slots = {}
-        for task in tasks:
-            if not task.completed:
-                key = (task.due_date, task.time)
-                slots.setdefault(key, []).append(task)
+            slots = defaultdict(list)
+            for task in tasks:
+               if not task.completed:
+                   slots[(task.due_date, task.time)].append(task)
         warnings = []
         for (day, time), group in sorted(slots.items()):
             if len(group) > 1:
