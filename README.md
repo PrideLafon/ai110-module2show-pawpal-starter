@@ -88,3 +88,26 @@ Pending tasks only
 4. Mark Buddy's task complete and a new one appears for tomorrow.
 
 **Key Scheduler behaviors shown:** sorting
+
+## Extension: Priority Scheduling
+
+Tasks have a `priority` field (`"high"`, `"medium"`, or `"low"`, default `"medium"`). `Scheduler.sort_by_priority()` sorts by priority first, then by date and time, using the `PRIORITY_ORDER` lookup table in `pawpal_system.py`.
+
+Files modified: `pawpal_system.py` (new field, lookup table, method), `main.py` (demo), `tests/test_pawpal.py` (new test).
+
+Sample output from `python main.py`:
+
+```
+[ ] 2026-10-12 07:30  Buddy   Breakfast (daily)
+
+Priority schedule (high first, then by time)
+----------------------------------------------------------
+[HIGH  ] 20:00  Luna    Flea treatment
+[MEDIUM] 07:30  Luna    Medication
+[MEDIUM] 14:00  Luna    Vet appointment
+[MEDIUM] 18:00  Buddy   Evening walk
+[LOW   ] 09:00  Buddy   Grooming
+
+```
+
+Tradeoff: priority is applied across all dates, so for a multi-day list a high-priority task next week would outrank a low-priority task today. The demo applies it to today's tasks only.

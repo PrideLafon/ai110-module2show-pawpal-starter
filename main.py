@@ -57,5 +57,18 @@ def main():
     print_schedule("Pending tasks only", scheduler.sort_by_time(pending))
 
 
+    # 7. Priority-based schedule (extension).
+    buddy.add_task(Task("Grooming", "09:00", priority="low"))
+    luna.add_task(Task("Flea treatment", "20:00", priority="high"))
+
+    print("\nPriority schedule (high first, then by time)")
+    print("-" * 58)
+    todays = scheduler.get_todays_schedule()
+    for t in scheduler.sort_by_priority(todays):
+        print(
+            f"[{t.priority.upper():<6}] {t.time}  "
+            f"{t.pet_name:<7} {t.description}"
+        )
+
 if __name__ == "__main__":
     main()
