@@ -124,3 +124,40 @@ Pending tasks only
 ## Implementation Summary
 
 PawPal+ is built from four classes in `pawpal_system.py`. `Task` represents one chore and can mark itself complete (creating the next occurrence if it repeats). `Pet` stores a pet's details and tasks. `Owner` holds a list of pets and can return every task across all of them. `Scheduler` takes an owner and handles sorting, filtering, conflict detection, and recurring tasks across all pets. `main.py` is a command-line demo that exercises all of this.
+
+## Testing PawPal+
+
+Run the automated tests from the project root with:
+
+```
+python -m pytest
+```
+
+### What the tests cover
+
+- **Task completion:** `mark_complete()` sets `completed` to `True`.
+- **Task addition:** adding a task to a pet increases its task count.
+- **Sorting:** tasks from different pets come back in chronological order.
+- **Recurrence:** completing a daily task creates an unfinished copy dated tomorrow.
+- **Conflict detection:** two pets with tasks at the same time produce a warning.
+- **Filtering:** tasks can be filtered by pet name and by completion status.
+- **Edge case:** a household with no tasks returns empty results without crashing.
+
+### Sample test output
+
+```
+============================= test session starts =============================
+platform win32 -- Python 3.14.8, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\PrideLafon\Documents\GitHub\ai110-module2show-pawpal-starter
+plugins: anyio-4.15.1
+collected 7 items
+
+tests\test_pawpal.py .......                                             [100%]
+
+============================== 7 passed in 0.06s ==============================
+
+```
+
+### Confidence level
+
+★★★★☆ (4/5). All 7 tests pass and they cover the core behavior. Conflict detection only checks for exact matching times, so overlapping durations are not tested.
